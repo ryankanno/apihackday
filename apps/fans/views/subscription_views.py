@@ -24,8 +24,20 @@ def subscribe(request):
 
 @csrf_exempt
 def unsubscribe(request):
+    output = {}
+
     subscription_id = request.POST.get('subscription_id', None)
-    sub = get_objects_or_404(Subscription, id=subscription_id)
+    sub = get_object_or_404(Subscription, id=subscription_id)
+
+    if sub.league_id:
+        output['league_id'] = sub.league_id
+
+    if sub.team_id:
+        output['team_id'] = sub.team_id
+
+    if sub.game_id:
+        output['game_id'] = sub.game_id
+
     sub.delete()
 
     return HttpResponse(json.dumps(output), mimetype="application/json")

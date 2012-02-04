@@ -57,7 +57,8 @@
               dataType: 'json',
               data: data,
               success: function(data) {
-                $this.removeClass('subscribe').addClass('unsubscribe');
+                var unsub = jQuery('<button class="btn btn-primary unsubscribe" data-subscription-id="' + data.subscription_id + '" data-loading-text="Unsubscribing...">Unsubscribe</button>');
+                $this.replaceWith(unsub);
               }
             });
 
@@ -78,7 +79,21 @@
               dataType: 'json',
               data: data,
               success: function(data) {
-                $this.removeClass('unsubscribe').addClass('subscribe');
+                var sub = jQuery('<button class="btn btn-primary subscribe data-loading-text="Subscribing...">Subscribe</button>');
+
+                if (data.league_id) {
+                    sub.data('league-id', data.league_id);
+                }
+
+                if (data.game_id) {
+                    sub.data('game-id', data.game_id);
+                }
+
+                if (data.team_id) {
+                    sub.data('team-id', data.team_id);
+                }
+
+                $this.replaceWith(sub);
               }
             });
 

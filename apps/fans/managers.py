@@ -11,3 +11,6 @@ class SubscriptionManager(models.Manager):
         game_subs   = self.filter(game_id=game_id) if game_id else self.none()
 
         return list(chain(league_subs, team_subs, game_subs))
+
+    def get_league_subs(self, user, league_ids):
+        return self.filter(league_id__in=league_ids, created_by=user.id)
