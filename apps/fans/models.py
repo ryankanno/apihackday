@@ -1,5 +1,7 @@
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from utilities.db.fields import CreatedDateTimeField, ModifiedDateTimeField
+from django.contrib.auth.models import User
 
 # Create your models here.
 from fans.managers import SubscriptionManager
@@ -21,9 +23,7 @@ class Subscription(models.Model):
         editable=False)
 
     modified_at = ModifiedDateTimeField(_('modified'))
-    modified_by = models.ForeignKey(User, 
-        related_name="%(app_label)s_%(class)s_modifier", null=True, blank=True,
-        editable=False)
+    modified_by = models.ForeignKey(User, related_name="%(app_label)s_%(class)s_modifier", null=True, blank=True, editable=False)
 
     class Meta:
         get_latest_by = 'modified_at'
