@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^leagues/(?P<league>[\-\w\s]+)/games/(?P<game>[\w\-]+)$', fanfeedr_views.game_details, name="game_details"),
     
     # subscription views
+    url(r'^subscriptions/$', subscription_views.details, name="subscription_details"),
     url(r'^subscriptions/subscribe$', subscription_views.subscribe, name="subscription_subscribe"),
     url(r'^subscriptions/unsubscribe$', subscription_views.unsubscribe, name="subscription_unsubscribe"),
 )

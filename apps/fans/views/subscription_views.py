@@ -1,4 +1,5 @@
 from django.template import RequestContext
+from django.shortcuts import render_to_response 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
@@ -42,3 +43,14 @@ def unsubscribe(request):
     sub.delete()
 
     return HttpResponse(json.dumps(output), mimetype="application/json")
+
+
+def details(request):
+    output = {}
+
+    league_subs = Subscription.objects.get_league_subs(request.user)
+    game_subs   = Subscription.objects.get_game_subs(request.user)
+    team_subs   = Subscription.objects.get_team_subs(request.user)
+
+    return render_to_response('subscriptions/details.html', {'league_subs':
+        league_subs, 'game_subs': game_subs, 'team_subs': team_subs}, context_instance=RequestContext(request))
