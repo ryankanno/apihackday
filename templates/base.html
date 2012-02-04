@@ -1,0 +1,54 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{% block title %}{% endblock title %}</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style.css?[CACHE_BUSTER]" />
+  <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.mobile-1.0.min.css?[CACHE_BUSTER]" />
+
+  {% block custom_css %}{% endblock custom_css %}
+
+  <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.1.min.js?[CACHE_BUSTER]"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/jquery.mobile-1.0.min.js?[CACHE_BUSTER]"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/modernizr-2.0.6.min.js?[CACHE_BUSTER]"></script>
+
+  <link rel="stylesheet/less" type="text/css" href="{{STATIC_URL}}css/style.less?[CACHE_BUSTER]" />
+  <script type="text/javascript" src="{{STATIC_URL}}js/less-1.1.5.min.js?[CACHE_BUSTER]"></script>
+  {% block custom_js %}{% endblock custom_js %}
+</head>
+
+<body> 
+  {% block header_container %}
+  <header>
+    {% block header %}
+    {% endblock header %}
+  </header>
+  {% endblock header_container %}
+
+  {% block content_container %}
+  <div role="main">
+    {% block content %}
+    {% endblock content %}
+  </div>
+  {% endblock content_container %}
+
+  {% block footer_container %}
+  <footer> 
+    {% block footer %}
+    {% endblock footer %}
+  </footer>
+  {% endblock footer_container %}
+</div>
+
+</body>
+</html>

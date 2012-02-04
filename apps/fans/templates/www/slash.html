@@ -3,4 +3,11 @@
 {% block title %}Something magical{% endblock title %}
 
 {% block content %}
+
+<ul>
+{% for league in leagues %}
+    <li>{{league}}</li>
+{% endfor %}
+</ul>
+
 {% endblock content %}
