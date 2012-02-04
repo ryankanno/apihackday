@@ -4,10 +4,8 @@
 
 {% block content %}
 
-<ul>
-{% for league in leagues %}
-    <li>{{league}}</li>
-{% endfor %}
-</ul>
+<h1>Routes</h1>
+
+<a href="{% url leagues %}">Leagues</a>
 
 {% endblock content %}

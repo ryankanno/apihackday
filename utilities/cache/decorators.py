@@ -23,13 +23,15 @@ def cacheable(key=None, ttl=60, is_enabled=True):
             key_fun = key
         else:
             if key is None:
-                key_fun = lambda *args, **kwargs: '%s-%s-%s' % \
-                    (fxn.__module__, fxn.__name__, '-'.join(map(arg2str, args)))
+                key_fun = lambda *args, **kwargs: '%s-%s-%s-%s' % \
+                    (fxn.__module__, fxn.__name__, '-'.join(map(arg2str, args)),
+                     '-'.join(["%s-%s" % (k, v) for k,v in kwargs.iteritems()]))
             else:
                 key_fun = lambda *args, **kwargs: key % args[:key.count('%')]
         
         @wraps(fxn)
         def wrapper(*args, **kwargs):
+            #TODO: print fxn.func_code.co_varnames[:fxn.func_code.co_argcount]
             if is_enabled:
                 key = key_fun(*args, **kwargs)
                 versioned_key = "%s-%s" % (CURRENT_VERSION, key)
