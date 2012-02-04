@@ -8,7 +8,7 @@ from fans.managers import SubscriptionManager
 
 class Subscription(models.Model):
 
-    id          = models.BigIntegerField(editable=False, primary_key=True)
+    id          = models.AutoField(primary_key=True)
     name        = models.CharField(max_length=128, null=False, blank=False)
 
     league_id   = models.CharField(max_length=40, null=True, blank=False)
@@ -28,3 +28,6 @@ class Subscription(models.Model):
     class Meta:
         get_latest_by = 'modified_at'
         ordering = ('-modified_at', '-created_at',)
+
+    def __unicode__(self):
+        return "%s-%s-%s" % (self.league_id, self.team_id, self.game_id)

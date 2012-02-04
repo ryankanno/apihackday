@@ -20,7 +20,4 @@ urlpatterns = patterns('',
     # subscription views
     url(r'^subscriptions/subscribe$', subscription_views.subscribe, name="subscription_subscribe"),
     url(r'^subscriptions/unsubscribe$', subscription_views.unsubscribe, name="subscription_unsubscribe"),
-
-    # sms related views
-    url(r'^sms/update$', www_views.update, name="sms_update"),
 )
