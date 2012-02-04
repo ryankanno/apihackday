@@ -57,5 +57,7 @@ def cache_all_games():
         games = get_games(league.id)
         for game in games:
             game['league'] = league
-            # parse date
-            add_game()
+
+            dtstr = game['date']
+            dt = datetime.datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S.000000Z")
+            add_game(dt.strftime("%Y-%m-%d"), game['id'])

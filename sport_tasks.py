@@ -5,13 +5,13 @@ from celery.task import task
 # TODO - hardcoded 10 minutes, parameterize
 from celery.task import PeriodicTask
 from datetime import timedelta
-class EveryThirtySecondsTask(PeriodicTask):
-    run_every = timedelta(seconds=10)
+class poll_subscriptions(PeriodicTask):
+    run_every = timedelta(seconds=10*60)
     
     def run(self, **kwargs):
         logger = self.get_logger(**kwargs)
         print ("Execute every 10 seconds")
-        
+
     
 from twilio.rest import TwilioRestClient
 import settings_local
