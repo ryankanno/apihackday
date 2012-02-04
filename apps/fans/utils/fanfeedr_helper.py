@@ -2,6 +2,8 @@ from django.conf import settings
 from fanfeedr import FanFeedrAPI
 from utilities.cache.decorators import cacheable
 
+import datetime
+
 import redis
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
@@ -41,10 +43,11 @@ def get_boxscore(version=VERSION, id=None):
 def add_game(date, game_id):
     games = r.get('games-%s' % date)
 
-    if game_id not in games:
-        games.append(game_id)
+    if games is not None:
+        if game_id not in games:
+            games.append(game_id)
 
-    r.set('games-%s' % date, games)
+        r.set('games-%s' % date, games)
 
 
 def get_game(date):
@@ -54,10 +57,13 @@ def get_game(date):
 def cache_all_games():
     leagues = get_leagues()
     for league in leagues:
-        games = get_games(league.id)
-        for game in games:
-            game['league'] = league
+        try:
+            games = get_games(id=league['id'])
+            for game in games:
+                game['league'] = league
 
-            dtstr = game['date']
-            dt = datetime.datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S.000000Z")
-            add_game(dt.strftime("%Y-%m-%d"), game['id'])
+                dtstr = game['date']
+                dt = datetime.datetime.strptime(dtstr, "%Y-%m-%dT%H:%M:%S.000000Z")
+                add_game(dt.strftime("%Y-%m-%d"), game['id'])
+        except Exception as e:
+            pass
