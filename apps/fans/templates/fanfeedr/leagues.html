@@ -10,9 +10,12 @@
 
 <h1>Magical Leagues</h1>
 <p>
-<ul>
+<ul id="leagues">
 {% for league in leagues %}
-<li><a href="{% url upcoming_games league=league.name %}">{{league.name}}</li>
+<li>
+    <button class="btn btn-primary subscribe" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
+    <a href="{% url upcoming_games league=league.name %}">{{league.name}}</a>
+</li>
 {% endfor %} 
 </ul>
 </p>

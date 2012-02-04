@@ -9,7 +9,10 @@
 <p>
 <ul>
 {% for game in games %}
-<li><a href="{% url game_details league=league, game=game.id %}">{{game.name}}</li>
+<li>
+    <button class="btn btn-primary subscribe" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
+    <a href="{% url game_details league=league, game=game.id %}">{{game.name}}</a>
+</li>
 {% empty %}
 <li>No upcoming events for {{league}} *<strong>sadface</strong>*</li>
 {% endfor %} 
