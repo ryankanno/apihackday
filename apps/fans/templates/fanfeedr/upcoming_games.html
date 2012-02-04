@@ -10,7 +10,11 @@
 <ul>
 {% for game in games %}
 <li>
-    <button class="btn btn-primary subscribe" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
+    {% if game.sub %}
+    <button class="btn btn-primary unsubscribe" data-subscription-id="{{game.sub}}" data-loading-text="Unsubscribing...">Unsubscribe</button>
+    {% else %}
+    <button class="btn btn-primary subscribe" data-game-id="{{game.id}}" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
+    {% endif %}
     <a href="{% url game_details league=league.id, game=game.id %}">{{game.name}}</a>
 </li>
 {% empty %}
