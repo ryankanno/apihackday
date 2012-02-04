@@ -14,7 +14,8 @@ def subscribe(request):
     team_id   = request.POST.get('team_id', None)
     game_id   = request.POST.get('game_id', None)
 
-    subscription = Subscription(league_id=league_id, team_id=team_id, game_id=game_id)
+    subscription = Subscription(league_id=league_id, team_id=team_id,
+            game_id=game_id, created_by=request.user)
     subscription.save()
 
     output['subscription_id'] = subscription.pk
