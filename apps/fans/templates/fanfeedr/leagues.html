@@ -14,7 +14,6 @@
 {% for league in leagues %}
 <li>
     {% with league.id as sub_key %}
-    {{subs.sub_key}}
     {% if subs.sub_key %}
     <button class="btn btn-primary unsubscribe" data-subscription-id="{{subs.sub_key}}" data-loading-text="Unsubscribing...">Unsubscribe</button>
     {% else %}

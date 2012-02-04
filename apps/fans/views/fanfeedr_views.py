@@ -12,14 +12,14 @@ def leagues(request):
     leagues = sorted(get_leagues(), key=operator.itemgetter('name'))
     subs = Subscription.objects.get_league_subs(request.user, [league.get('id') for league in leagues])
     for sub in subs:
-        sub_dict[sub.league_id] = sub.pk
+        sub_dict[sub.league_id.encode('ascii')] = sub.pk
     return render_to_response('fanfeedr/leagues.html', {'leagues': leagues, 'subs':sub_dict}, 
         context_instance=RequestContext(request))
 
 
 def upcoming_games(request, league):
-    id = filter(lambda x: x['name'] == league, get_leagues())[0]
-    upcoming = get_games(id=id['id']) or []
+    league = filter(lambda x: x['name'] == league, get_leagues())[0]
+    upcoming = get_games(id=league['id']) or []
     return render_to_response('fanfeedr/upcoming_games.html', {'games': upcoming, 'league': league}, 
         context_instance=RequestContext(request))
 
