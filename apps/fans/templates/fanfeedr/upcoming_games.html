@@ -6,10 +6,14 @@
 
 <h1>Games</h1>
 
+<p>
 <ul>
 {% for game in games %}
 <li><a href="{% url game_details league=league, game=game.id %}">{{game.name}}</li>
+{% empty %}
+<li>No upcoming events for {{league}} *<strong>sadface</strong>*</li>
 {% endfor %} 
 </ul>
+</p>
 
 {% endblock content %}

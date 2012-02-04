@@ -13,32 +13,48 @@
   <meta name="author" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style.css?[CACHE_BUSTER]" />
-  <link rel="stylesheet" href="{{STATIC_URL}}css/jquery.mobile-1.0.min.css?[CACHE_BUSTER]" />
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css?[CACHE_BUSTER]" />
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap-responsive.min.css?[CACHE_BUSTER]" />
 
   {% block custom_css %}{% endblock custom_css %}
-
-  <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.1.min.js?[CACHE_BUSTER]"></script>
-  <script type="text/javascript" src="{{STATIC_URL}}js/jquery.mobile-1.0.min.js?[CACHE_BUSTER]"></script>
-  <script type="text/javascript" src="{{STATIC_URL}}js/modernizr-2.0.6.min.js?[CACHE_BUSTER]"></script>
 
   <link rel="stylesheet/less" type="text/css" href="{{STATIC_URL}}css/style.less?[CACHE_BUSTER]" />
   <script type="text/javascript" src="{{STATIC_URL}}js/less-1.1.5.min.js?[CACHE_BUSTER]"></script>
   {% block custom_js %}{% endblock custom_js %}
+
+  <style type="text/css">
+      div[role="main"].container {
+         padding-top:5em;
+      }
+  </style> 
 </head>
 
 <body> 
   {% block header_container %}
   <header>
     {% block header %}
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="{% url slash %}">Something Magical</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              {% block menu %}
+              <li><a href="{% url leagues %}">Leagues</a></li>
+              {% endblock menu %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
     {% endblock header %}
   </header>
   {% endblock header_container %}
 
   {% block content_container %}
-  <div role="main">
-    {% block content %}
-    {% endblock content %}
+  <div role="main" class="container">
+      {% block content %}
+      {% endblock content %}
   </div>
   {% endblock content_container %}
 
@@ -48,6 +64,8 @@
     {% endblock footer %}
   </footer>
   {% endblock footer_container %}
+
+    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
 </div>
 
 </body>
