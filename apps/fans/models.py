@@ -8,12 +8,19 @@ from fans.managers import SubscriptionManager
 
 class Subscription(models.Model):
 
-    id          = models.AutoField(primary_key=True)
-    name        = models.CharField(max_length=128, null=False, blank=False)
+    ACTIVE  = 1
+    DELETED = 2
 
+    STATUS_CHOICES = (
+        (ACTIVE, 'Active'),
+        (DELETED, 'Deleted'),
+    )
+
+    id          = models.AutoField(primary_key=True)
     league_id   = models.CharField(max_length=40, null=True, blank=False)
     team_id     = models.CharField(max_length=40, null=True, blank=False)
     game_id     = models.CharField(max_length=40, null=True, blank=False)
+    status      = models.IntegerField(choices=STATUS_CHOICES, default=ACTIVE)
 
     objects     = SubscriptionManager()
 
@@ -31,3 +38,7 @@ class Subscription(models.Model):
 
     def __unicode__(self):
         return "%s-%s-%s" % (self.league_id, self.team_id, self.game_id)
+
+    def delete(self):
+        self.status = DELETED
+        self.save()
