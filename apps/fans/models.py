@@ -40,5 +40,5 @@ class Subscription(models.Model):
         return "%s-%s-%s" % (self.league_id, self.team_id, self.game_id)
 
     def delete(self):
-        self.status = DELETED
+        self.status = self.DELETED
         self.save()
