@@ -10,8 +10,6 @@ urlpatterns = patterns('',
     # www related views
     url(r'^$', www_views.slash, name="slash"),
 
-    url(r'^test/$', fanfeedr_views.game_boxscore, name="test"),
-
     # fanfeedr views
     url(r'^leagues/$', fanfeedr_views.leagues, name="leagues"),
     url(r'^leagues/(?P<league>[\-\w\s]+)/games/prev$', fanfeedr_views.previous_games, name="previous_games"),

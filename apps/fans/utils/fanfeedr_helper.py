@@ -43,9 +43,18 @@ def get_event(version=VERSION, id=None):
 
 
 def get_boxscore(version=VERSION, id=None):
-    id = '5b1be5b0-a636-5e1a-bde6-e643f4584db2'
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
     return api.get_collection("boxscore", "events", id)
+
+
+def get_lineup(version=VERSION, id=None):
+    api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
+    return api.get_collection("lineup", "events", id)
+
+
+def get_recap(version=VERSION, id=None):
+    api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
+    return api.get_collection("recap", "events", id)
 
 
 def add_game(date, game_id):
