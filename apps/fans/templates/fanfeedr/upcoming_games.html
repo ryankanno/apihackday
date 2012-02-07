@@ -7,6 +7,8 @@
 <li><a href="{% url leagues %}">Leagues</a></li>
 {% endblock menu %}
 
+{% load fan_tags %}
+
 {% block content %}
 
 <h1>Games</h1>
@@ -21,6 +23,7 @@
     <button class="btn btn-primary subscribe" data-game-id="{{game.id}}" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
     {% endif %}
     <a href="{% url game_details league=league.id, game=game.id %}">{{game.name}}</a>
+    on {% iso8601 game.date "%m/%d/%Y" %} at {% iso8601 game.date "%H:%M" %} UTC
 </li>
 {% empty %}
 <li>No upcoming events for {{league.name}} *<strong>sadface</strong>*</li>
