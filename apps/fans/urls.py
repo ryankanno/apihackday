@@ -14,7 +14,9 @@ urlpatterns = patterns('',
 
     # fanfeedr views
     url(r'^leagues/$', fanfeedr_views.leagues, name="leagues"),
-    url(r'^leagues/(?P<league>[\-\w\s]+)/games/upcoming$', fanfeedr_views.upcoming_games, name="upcoming_games"),
+    url(r'^leagues/(?P<league>[\-\w\s]+)/games/prev$', fanfeedr_views.previous_games, name="previous_games"),
+    url(r'^leagues/(?P<league>[\-\w\s]+)/games/today$', fanfeedr_views.todays_games, name="todays_games"),
+    url(r'^leagues/(?P<league>[\-\w\s]+)/games/next$', fanfeedr_views.upcoming_games, name="upcoming_games"),
     url(r'^leagues/(?P<league>[\-\w\s]+)/games/(?P<game>[\w\-]+)$', fanfeedr_views.game_details, name="game_details"),
     
     # subscription views

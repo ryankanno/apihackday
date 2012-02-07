@@ -19,7 +19,14 @@
     {% else %}
     <button class="btn btn-primary subscribe" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
     {% endif %}
-    <a href="{% url upcoming_games league=league.name %}">{{league.name}}</a>
+    <strong>{{league.name}}</strong>
+    ( 
+    <a href="{% url previous_games league=league.name %}">Previous</a>
+    &middot;
+    <a href="{% url todays_games league=league.name %}">Today</a>
+    &middot;
+    <a href="{% url upcoming_games league=league.name %}">Upcoming</a>
+    )
 </li>
 {% endfor %} 
 </ul>

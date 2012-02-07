@@ -7,7 +7,6 @@ import datetime
 import redis
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
-
 FANFEEDR_API_KEY = getattr(settings, 'FANFEEDR_API_KEY', None)
 TIER = getattr(settings, 'TIER', None)
 VERSION = "1"
@@ -15,21 +14,30 @@ VERSION = "1"
 
 @cacheable(ttl=60*60*4)
 def get_leagues(version=VERSION):
-    print "Calling Leagues"
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
     return api.get_collection("leagues")
 
 
 @cacheable(ttl=60*60*4)
-def get_games(version=VERSION, id=None):
-    print "Calling Games"
+def get_upcoming_games(version=VERSION, id=None):
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
     return api.get_collection_method("next", "events", ptype="leagues", puid=id)
 
 
 @cacheable(ttl=60*60*4)
+def get_previous_games(version=VERSION, id=None):
+    api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
+    return api.get_collection_method("last", "events", ptype="leagues", puid=id)
+
+
+@cacheable(ttl=60*60*1)
+def get_todays_games(version=VERSION, id=None):
+    api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
+    return api.get_collection_method("today", "events", ptype="leagues", puid=id)
+
+
+@cacheable(ttl=60*60*4)
 def get_event(version=VERSION, id=None):
-    print "Get Event"
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
     return api.get_resource("events", id)
 
