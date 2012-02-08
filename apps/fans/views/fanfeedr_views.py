@@ -8,6 +8,9 @@ from fans.utils.fanfeedr_helper import get_upcoming_games
 from fans.models import Subscription
 
 import operator
+import iso8601
+import datetime
+from operator import itemgetter
 
 
 def leagues(request):
@@ -23,49 +26,55 @@ def leagues(request):
         context_instance=RequestContext(request))
 
 
-def previous_games(request, league):
-    league = filter(lambda x: x['name'] == league, get_leagues())[0]
-    previous = get_previous_games(id=league['id']) or []
+def _get_games(user, league, fun, server_ts):
+    games  = fun(id=league['id']) or []
+    subs   = Subscription.objects.get_game_subs(user, [g.get('id') for g in games])
 
-    subs = Subscription.objects.get_game_subs(request.user, [g.get('id') for g in previous])
-    for game in previous:
+    for game in games:
         try:
             game['sub'] = subs.filter(game_id=str(game.get('id'))).get().pk
         except Exception as e:
             pass
 
+        try:
+            game['datetime'] = iso8601.parse_date(game['date'])
+        except Exception as e:
+            game['datetime'] = datetime.datetime.min
+
+        game['has_started'] = (server_ts > game['datetime'].replace(tzinfo=None))
+
+    
+    return sorted(games, key=itemgetter('date'), reverse=True)
+
+
+def previous_games(request, league):
+    server_ts = datetime.datetime.utcnow()
+    league = filter(lambda x: x['name'] == league, get_leagues())[0]
+    games     = _get_games(request.user, league, get_previous_games, server_ts)
+
     return render_to_response('fanfeedr/previous_games.html', 
-        {'games': previous, 'league': league}, context_instance=RequestContext(request))
+        {'games': games, 'server_ts': server_ts,
+         'league': league}, context_instance=RequestContext(request))
 
 
 def todays_games(request, league):
-    league = filter(lambda x: x['name'] == league, get_leagues())[0]
-    today = get_todays_games(id=league['id']) or []
-
-    subs = Subscription.objects.get_game_subs(request.user, [g.get('id') for g in today])
-    for game in today:
-        try:
-            game['sub'] = subs.filter(game_id=str(game.get('id'))).get().pk
-        except Exception as e:
-            pass
+    server_ts = datetime.datetime.utcnow()
+    league    = filter(lambda x: x['name'] == league, get_leagues())[0]
+    games     = _get_games(request.user, league, get_todays_games, server_ts)
 
     return render_to_response('fanfeedr/todays_games.html', 
-        {'games': today, 'league': league}, context_instance=RequestContext(request))
+        {'games': games, 'server_ts': server_ts,
+         'league': league}, context_instance=RequestContext(request))
 
 
 def upcoming_games(request, league):
-    league = filter(lambda x: x['name'] == league, get_leagues())[0]
-    upcoming = get_upcoming_games(id=league['id']) or []
-
-    subs = Subscription.objects.get_game_subs(request.user, [g.get('id') for g in upcoming])
-    for game in upcoming:
-        try:
-            game['sub'] = subs.filter(game_id=str(game.get('id'))).get().pk
-        except Exception as e:
-            pass
+    server_ts = datetime.datetime.utcnow()
+    league    = filter(lambda x: x['name'] == league, get_leagues())[0]
+    games     = _get_games(request.user, league, get_upcoming_games, server_ts)
 
     return render_to_response('fanfeedr/upcoming_games.html', 
-        {'games': upcoming, 'league': league}, context_instance=RequestContext(request))
+        {'games': games, 'server_ts': server_ts,
+         'league': league}, context_instance=RequestContext(request))
 
 
 def game_details(request, league, game):

@@ -17,13 +17,14 @@
 <ul>
 {% for game in games %}
 <li>
-    {% if game.sub %}
-    <button class="btn btn-primary unsubscribe" data-subscription-id="{{game.sub}}" data-loading-text="Unsubscribing...">Unsubscribe</button>
-    {% else %}
-    <button class="btn btn-primary subscribe" data-game-id="{{game.id}}" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
+    {% if not game.has_started %}
+        {% if game.sub %}
+        <button class="btn btn-primary unsubscribe" data-subscription-id="{{game.sub}}" data-loading-text="Unsubscribing...">Unsubscribe</button>
+        {% else %}
+        <button class="btn btn-primary subscribe" data-game-id="{{game.id}}" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
+        {% endif %}
     {% endif %}
-    <a href="{% url game_details league=league.id, game=game.id %}">{{game.name}}</a>
-    on {% iso8601 game.date "%m/%d/%Y" %} at {% iso8601 game.date "%H:%M" %} UTC
+    <a href="{% url game_details league=league.id, game=game.id %}">{{game.name}}</a> on {% iso8601 game.date "%m/%d/%Y" %} at {% iso8601 game.date "%H:%M" %} UTC
 </li>
 {% empty %}
 <li>No previous events for {{league.name}} *<strong>sadface</strong>*</li>
