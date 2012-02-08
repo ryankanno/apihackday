@@ -3,19 +3,27 @@ from fanfeedr import FanFeedrAPI
 from utilities.cache.decorators import cacheable
 
 import datetime
+import logging
 
-import redis
-r = redis.StrictRedis(host='localhost', port=6379, db=0)
+LOG = logging.getLogger(__name__)
 
 FANFEEDR_API_KEY = getattr(settings, 'FANFEEDR_API_KEY', None)
-TIER = getattr(settings, 'TIER', None)
-VERSION = "1"
+TIER             = getattr(settings, 'TIER', None)
+VERSION          = "1"
+
+YEAR_CACHE = 60*60*24*365
 
 
-@cacheable(ttl=60*60*4)
+@cacheable(ttl=YEAR_CACHE)
 def get_leagues(version=VERSION):
+    LOG.info("Calling get_leagues")
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
-    return api.get_collection("leagues")
+    try:
+        leagues = api.get_collection("leagues")
+    except Exception as e:
+        LOG.error("Exception occurred calling get_leagues", e)
+        leagues = []
+    return leagues
 
 
 @cacheable(ttl=60*60*4)
@@ -24,10 +32,16 @@ def get_upcoming_games(version=VERSION, id=None):
     return api.get_collection_method("next", "events", ptype="leagues", puid=id)
 
 
-@cacheable(ttl=60*60*4)
+@cacheable(ttl=YEAR_CACHE)
 def get_previous_games(version=VERSION, id=None):
+    LOG.info("Calling get_previous_games")
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
-    return api.get_collection_method("last", "events", ptype="leagues", puid=id)
+    try:
+        games = api.get_collection_method("last", "events", ptype="leagues", puid=id)
+    except Exception as e:
+        LOG.error("Exception calling get_previous_games", e)
+        games = []
+    return games
 
 
 @cacheable(ttl=60*60*1)
@@ -38,13 +52,26 @@ def get_todays_games(version=VERSION, id=None):
 
 @cacheable(ttl=60*60*4)
 def get_event(version=VERSION, id=None):
+    LOG.info("Calling get_event")
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
-    return api.get_resource("events", id)
+    try:
+        evt = api.get_resource("events", id)
+    except Exception as e:
+        LOG.error("Exception occurred calling get_event", e)
+        evt = {}
+    return evt
 
 
+@cacheable(ttl=YEAR_CACHE)
 def get_boxscore(version=VERSION, id=None):
+    LOG.info("Calling get_boxscore")
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
-    return api.get_collection("boxscore", "events", id)
+    try:
+        bs = api.get_collection("boxscore", "events", id)
+    except Exception as e:
+        LOG.error("Exception occurred calling get_boxscore", e)
+        bs = {}
+    return bs
 
 
 def get_lineup(version=VERSION, id=None):
@@ -53,8 +80,18 @@ def get_lineup(version=VERSION, id=None):
 
 
 def get_recap(version=VERSION, id=None):
+    LOG.info("Calling get_recap")
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
-    return api.get_collection("recap", "events", id)
+    try:
+        recap = api.get_collection("recap", "events", id)
+    except Exception as e:
+        LOG.error("Exception occurred calling get_recap", e)
+        recap = []
+    return recap 
+
+
+import redis
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
 def add_game(date, game_id):
