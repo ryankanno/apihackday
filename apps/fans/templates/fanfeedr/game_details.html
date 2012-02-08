@@ -11,9 +11,16 @@
 
 <h1>{{game_details.name}}</h1>
 
-<p>
-    {{game_details}}
-</p>
+<dl>
+    <dt>Status</dt>
+    <dd>{{game_details.status}}</dd>
+
+    <dt>Score</dt>
+    <dd>{{game_details.away_team.abr}} - {{game_details.away_team.score}}</dd>
+    <dd>{{game_details.home_team.abr}} - {{game_details.home_team.score}}</dd>
+
+    <!-- {{game_details}} -->
+</dl>
 
 <div class="lineup">
     <h2>Lineup</h2>
