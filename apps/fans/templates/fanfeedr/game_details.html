@@ -38,6 +38,30 @@
 
 <div class="boxscore">
     <h2>Boxscore</h2>
+
+    <table border="1">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <td>{{game_details.away_team.abr}}</td>
+                <td>{{ game_boxscore.away.score.linescore.1 }}</td>
+                <td>{{ game_boxscore.away.score.linescore.2 }}</td>
+                <td>{{ game_boxscore.away.score.linescore.3 }}</td>
+                <td>{{ game_boxscore.away.score.linescore.4 }}</td>
+                <td>{{ game_boxscore.away.score.score }}</td>
+            </tr>
+            <tr>
+                <td>{{game_details.home_team.abr}}</td>
+                <td>{{ game_boxscore.home.score.linescore.1 }}</td>
+                <td>{{ game_boxscore.home.score.linescore.2 }}</td>
+                <td>{{ game_boxscore.home.score.linescore.3 }}</td>
+                <td>{{ game_boxscore.home.score.linescore.4 }}</td>
+                <td>{{ game_boxscore.home.score.score }}</td>
+            </tr>
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+
     <p>
         {{game_boxscore}}
     </p>

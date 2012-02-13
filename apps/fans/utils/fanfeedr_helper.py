@@ -75,12 +75,13 @@ def get_boxscore(version=VERSION, id=None):
 
 
 def get_lineup(version=VERSION, id=None):
+    LOG.info("Calling get_lineup")
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
     return api.get_collection("lineup", "events", id)
 
 
 def get_recap(version=VERSION, id=None):
-    LOG.info("Calling get_recap")
+    LOG.info("Calling get_recap for game(id={0})".format(id))
     api = FanFeedrAPI(FANFEEDR_API_KEY, tier=TIER) 
     try:
         recap = api.get_collection("recap", "events", id)

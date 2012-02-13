@@ -80,8 +80,7 @@ def upcoming_games(request, league):
 def game_details(request, league, game):
     details = get_event(id=game) or []
     boxscore = get_boxscore(id=game) or []
-    #recap    = get_recap(id=game) or []
-    recap = []
+    recap    = get_recap(id=game) or []
     lineup   = get_lineup(id=game) or []
     return render_to_response('fanfeedr/game_details.html', 
         {'game_details': details, 'game_boxscore': boxscore, 'game_recap': recap, 'game_lineup': lineup},
