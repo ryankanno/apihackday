@@ -176,6 +176,8 @@ TWILIO_TOKEN   = 'YYYYYYYYYYYYYYYYYY'
 
 FANFEEDR_API_KEY = ''
 
+CELERY_SUB_EVAL_INTERVAL_SEC = 30
+
 try:
     from settings_local import *
 except ImportError as e:
