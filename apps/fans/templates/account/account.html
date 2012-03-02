@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Leagues{% endblock title %}
+
+{% block menu %}
+<li><a href="{% url subscription_details %}">Subscriptions</a></li>
+<li><a href="{% url leagues %}">Leagues</a></li>
+<li class="active"><a href="{% url account %}">Account</a></li>
+{% endblock menu %}
+
+{% block content %}
+
+<h1>Account Details</h1>
+
+<form action="/account/" method="post">{% csrf_token %}
+    {{ form.as_table }}
+    <br><input type="submit" value="Update" />
+</form>
+
+<h2>{{ message }}</h2>
+
+{% endblock content %}
