@@ -8,7 +8,7 @@ import settings
 from fans.models import Subscription
 from fans.subscriptions import sub_rules
 
-@periodic_task(run_every=datetime.timedelta(seconds=settings.SUB_EVAL_INTERVAL_SEC))
+@periodic_task(run_every=datetime.timedelta(seconds=settings.CELERY_SUB_EVAL_INTERVAL_SEC))
 def poll_subcriptions():
     '''
     Poll according to defined interval and determine if subscription's "interesting or not"
