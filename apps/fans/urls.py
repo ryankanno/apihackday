@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from fans.views import www_views, fanfeedr_views, subscription_views
+from fans.views import www_views, fanfeedr_views, subscription_views, account_views
 
 urlpatterns = patterns('',
 
