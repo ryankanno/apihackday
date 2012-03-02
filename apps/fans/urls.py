@@ -16,9 +16,12 @@ urlpatterns = patterns('',
     url(r'^leagues/(?P<league>[\-\w\s]+)/games/today$', fanfeedr_views.todays_games, name="todays_games"),
     url(r'^leagues/(?P<league>[\-\w\s]+)/games/next$', fanfeedr_views.upcoming_games, name="upcoming_games"),
     url(r'^leagues/(?P<league>[\-\w\s]+)/games/(?P<game>[\w\-]+)$', fanfeedr_views.game_details, name="game_details"),
-    
+
     # subscription views
     url(r'^subscriptions/$', subscription_views.details, name="subscription_details"),
     url(r'^subscriptions/subscribe$', subscription_views.subscribe, name="subscription_subscribe"),
     url(r'^subscriptions/unsubscribe$', subscription_views.unsubscribe, name="subscription_unsubscribe"),
+
+    # account
+    url(r'^account/$', account_views.account, name="account"),
 )
