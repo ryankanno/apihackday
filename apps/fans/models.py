@@ -25,7 +25,7 @@ class Subscription(models.Model):
     objects     = SubscriptionManager()
 
     created_at  = CreatedDateTimeField(_('created'))
-    created_by  = models.ForeignKey(User, 
+    created_by  = models.ForeignKey(User,
         related_name="%(app_label)s_%(class)s_creator", null=True, blank=True,
         editable=False)
 
@@ -42,3 +42,14 @@ class Subscription(models.Model):
     def delete(self):
         self.status = self.DELETED
         self.save()
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+
+    phone_number = models.CharField(max_length=20, null=True, blank=False)
+
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+post_save.connect(create_user_profile, sender=User)
