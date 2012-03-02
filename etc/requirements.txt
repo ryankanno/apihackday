@@ -17,7 +17,7 @@ fanfeedr==1.0
 httplib2==0.7.1
 iso8601==0.1.4
 kombu==2.1.0
-libxml2-python==2.7.8
+#libxml2-python==2.7.8
 mechanize==0.2.5
 oauth2==1.5.211
 pycrypto==2.4.1
@@ -27,6 +27,6 @@ python-twitter==0.8.2
 redis==2.4.11
 simplejson==2.1.6
 ssh==1.7.11
-twilio==3.3.4
+twilio==3.3.5
 twython==1.4.5
 wsgiref==0.1.2
