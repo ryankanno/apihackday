@@ -1,8 +1,8 @@
 {% if user.is_authenticated %}
-<li><a href="{% url subscription_details %}">Subscriptions</a></li>
-<li><a href="{% url leagues %}">Leagues</a></li>
-<li><a href="{% url account %}">Account</a></li>
+<li class="subscriptions"><a href="{% url subscription_details %}">Subscriptions</a></li>
+<li class="leagues"><a href="{% url leagues %}">Leagues</a></li>
+<li class="account"><a href="{% url account %}">Account</a></li>
 <li><a href="{% url auth_logout %}">Logout</a></li>
 {% else %}
-<li><a href="{% url auth_login %}">Login</a></li>
+<li class="login"><a href="{% url auth_login %}">Login</a></li>
 {% endif %}
