@@ -1,0 +1,7 @@
+{% if user.is_authenticated %}
+<li><a href="{% url subscription_details %}">Subscriptions</a></li>
+<li><a href="{% url leagues %}">Leagues</a></li>
+<li><a href="{% url account %}">Account</a></li>
+{% else %}
+<li><a href="{% url auth_login %}">Login</a></li>
+{% endif %}

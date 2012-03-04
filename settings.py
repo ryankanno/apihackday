@@ -6,9 +6,11 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_ROOT = os.path.normpath(os.path.realpath(os.path.dirname(__file__)))
+VENDOR_ROOT  = os.path.join(PROJECT_ROOT, 'vendor')
 
 sys.path.insert(0, PROJECT_ROOT)
 sys.path.insert(1, os.path.join(PROJECT_ROOT, 'apps'))
+sys.path.insert(2, os.path.join(VENDOR_ROOT, 'django-registration'))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

@@ -115,7 +115,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               {% block menu %}
-              <li><a href="{% url leagues %}">Leagues</a></li>
+              {% include 'shared/menu.html' %}
               {% endblock menu %}
             </ul>
           </div><!--/.nav-collapse -->
