@@ -186,6 +186,9 @@ CACHES = {
     },
 }
 
+# Profile
+AUTH_PROFILE_MODULE = 'fans.UserProfile'
+
 # Registration
 LOGIN_REDIRECT_URL = '/'
 
