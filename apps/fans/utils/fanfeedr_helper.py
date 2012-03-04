@@ -8,7 +8,7 @@ import logging
 LOG = logging.getLogger(__name__)
 
 FANFEEDR_API_KEY = getattr(settings, 'FANFEEDR_API_KEY', None)
-FANFEED_TIER     = getattr(settings, 'FANFEEDR_TIER', None)
+FANFEEDR_TIER    = getattr(settings, 'FANFEEDR_TIER', None)
 VERSION          = "1"
 
 YEAR_CACHE = 60*60*24*365
