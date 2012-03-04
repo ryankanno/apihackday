@@ -53,4 +53,5 @@ def details(request):
     team_subs   = Subscription.objects.get_team_subs(request.user)
 
     return render_to_response('subscriptions/details.html', {'league_subs':
-        league_subs, 'game_subs': game_subs, 'team_subs': team_subs}, context_instance=RequestContext(request))
+        league_subs, 'game_subs': game_subs, 'team_subs': team_subs}, 
+        context_instance=RequestContext(request))
