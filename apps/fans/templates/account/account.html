@@ -11,12 +11,12 @@
 {% block content %}
 
 <h1>Account Details</h1>
-
-<form action="/account/" method="post">{% csrf_token %}
-    {{ form.as_table }}
-    <br><input type="submit" value="Update" />
+{{message}}
+<form action="{% url account %}" method="POST">
+    {% csrf_token %}
+    <label for="phone_number">Phone Number</label>
+    {{form.phone_number}}
+    <input type="submit" value="Update" />
 </form>
-
-<h2>{{ message }}</h2>
 
 {% endblock content %}

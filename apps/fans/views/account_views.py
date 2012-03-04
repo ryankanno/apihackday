@@ -1,25 +1,27 @@
-from django.forms import ModelForm
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
 
-from fans.models import UserProfile
+from fans.forms import UserProfileForm
 
-class UserProfileForm(ModelForm):
-    class Meta:
-        model = UserProfile
-
+@login_required
 def account(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, instance=request.user.get_profile())
-        if form.is_valid():
-            user_profile = request.user.get_profile()
-            user_profile.phone_number = form.cleaned_data['phone_number']
-            user_profile.save()
-            return render_to_response('account/account.html', { 'form': form, 'message': 'Phone number saved!'}, context_instance=RequestContext(request))
-        else:
-            form = UserProfileForm(instance=request.user.get_profile())
-            return render_to_response('account/account.html', { 'form': form, 'message': 'Invalid phone number!'}, context_instance=RequestContext(request))
+    message = ''
+    profile = request.user.get_profile()
 
-    form = UserProfileForm(instance=request.user.get_profile())
-    return render_to_response('account/account.html', { 'form': form, 'message': ''}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=profile, initial={'user':request.user})
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.phone_number = form.cleaned_data['phone_number']
+            profile.save()
+            message = 'Phone number saved!'
+        else:
+            message = 'Invalid phone number!'
+    else:
+        form = UserProfileForm(instance=profile, initial={'user':request.user})
+
+    return render_to_response('account/account.html', 
+        { 'form': form, 'message': message}, 
+        context_instance=RequestContext(request))
 
