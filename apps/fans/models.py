@@ -48,6 +48,7 @@ class Subscription(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     phone_number = models.CharField(max_length=20, null=True, blank=False)
+    timezone = models.CharField(max_length=32, null=True, blank=False)
 
 
 def create_user_profile(sender, instance, created, **kwargs):

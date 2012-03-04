@@ -16,6 +16,14 @@
     {% csrf_token %}
     <label for="phone_number">Phone Number</label>
     {{form.phone_number}}
+
+    <label for="timezone">Time zone:</label>
+    <select name="timezone">
+        {% for tz in timezones %}
+        <option value="{{ tz }}"{% if tz == form.timezone.value %} selected="selected"{% endif %}>{{ tz }}</option>
+        {% endfor %}
+    </select>
+    <br/>
     <input type="submit" value="Update" />
 </form>
 

@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from fans.forms import UserProfileForm
 
+import pytz
+
 @login_required
 def account(request):
     message = ''
@@ -14,14 +16,15 @@ def account(request):
         if form.is_valid():
             profile = form.save(commit=False)
             profile.phone_number = form.cleaned_data['phone_number']
+            profile.timezone = form.cleaned_data['timezone']
             profile.save()
-            message = 'Phone number saved!'
+            message = 'Profile updated'
         else:
-            message = 'Invalid phone number!'
+            message = 'Unable to update profile'
     else:
         form = UserProfileForm(instance=profile, initial={'user':request.user})
 
     return render_to_response('account/account.html', 
-        { 'form': form, 'message': message}, 
+        {'form': form, 'message': message, 'timezones': pytz.common_timezones}, 
         context_instance=RequestContext(request))
 
