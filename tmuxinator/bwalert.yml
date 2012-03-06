@@ -1,0 +1,23 @@
+# ~/.tmuxinator/bwalert.yml
+# you can make as many tabs as you wish...
+
+project_name: bandwagonalert
+project_root: ~/
+socket_name: #foo # Not needed.  Remove to use default socket
+#rvm: 1.9.2@rails_project
+#pre: sudo /etc/rc.d/mysqld start
+tabs:
+  - admin:
+      layout: tiled
+      panes: 
+        - workon apihackday && cd ~/stuff/apihackday ; ~/stuff/apihackday/cleandjango.sh ; python manage.py runserver
+        - workon apihackday && cd ~/stuff/apihackday ; ~/stuff/apihackday/cleanredis.sh ; redis-server
+        - workon apihackday && cd ~/stuff/apihackday && sudo /opt/local/share/mysql5/mysql/mysql.server start
+        - workon apihackday && cd ~/stuff/apihackday && DJANGO_SETTINGS_MODULE=settings PYTHONPATH=$PYTHONPATH:~/stuff/apihackday/celery celeryd -B
+  - editor: 
+      layout: tiled
+      panes:
+        - workon apihackday && cd ~/stuff/apihackday && vim
+  - shell: workon apihackday && cd ~/stuff/apihackday
+  - fanfeedr: workon apihackday && cd ~/stuff/apihackday
+  - mysql: workon apihackday && cd ~/stuff/apihackday
