@@ -19,7 +19,8 @@
         <button class="btn btn-primary subscribe" data-game-id="{{game.id}}" data-league-id="{{league.id}}" data-loading-text="Subscribing...">Subscribe</button>
         {% endif %}
     {% endif %}
-    <a href="{% url game_details league=league.id, game=game.id %}">{{game.name}}</a> on {% iso8601 game.date "%m/%d/%Y" %} at {% iso8601 game.date "%H:%M" %} UTC
+    <a href="{% url game_details league=league.id, game=game.id
+        %}">{{game.name}}</a> on {% iso8601 game.date user.get_profile.timezone "%m/%d/%Y" %} at {% iso8601 game.date user.get_profile.timezone "%H:%M" %}
 </li>
 {% empty %}
 <li>No events today for {{league.name}} *<strong>sadface</strong>*</li>
